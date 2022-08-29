@@ -1,9 +1,6 @@
 package pl.rafalrozek.klg.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +9,7 @@ import java.time.Instant;
 @Entity
 @Builder
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table

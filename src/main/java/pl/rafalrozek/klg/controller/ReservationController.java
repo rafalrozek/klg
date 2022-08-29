@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.rafalrozek.klg.dto.ReservationAddDto;
 import pl.rafalrozek.klg.dto.ReservationEditDto;
+import pl.rafalrozek.klg.model.Reservation;
 import pl.rafalrozek.klg.service.ReservationService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservation")

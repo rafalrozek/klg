@@ -22,7 +22,7 @@ public class Person {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "person", orphanRemoval = true)
+    @OneToMany(mappedBy = "person", orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
 }

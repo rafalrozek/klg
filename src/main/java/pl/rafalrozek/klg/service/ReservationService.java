@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import pl.rafalrozek.klg.dto.ReservationAddDto;
+import pl.rafalrozek.klg.dto.ReservationDto;
 import pl.rafalrozek.klg.dto.ReservationEditDto;
 import pl.rafalrozek.klg.model.Person;
 import pl.rafalrozek.klg.model.RentObject;
@@ -13,6 +14,7 @@ import pl.rafalrozek.klg.repository.RentObjectRepository;
 import pl.rafalrozek.klg.repository.ReservationRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -76,18 +78,30 @@ public class ReservationService {
         return reservationRepository.save(newReservation);
     }
 
-    public List<Reservation> getByPerson(Long id) throws Exception {
+    public List<ReservationDto> getByPerson(Long id) throws Exception {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new Exception("Person ID not found"));
 
-        return person.getReservations();
+        return person.getReservations().stream().map(i -> ReservationDto.builder()
+                .dateFrom(i.getDateFrom())
+                .dateTo(i.getDateTo())
+                .description(i.getDescription())
+                .price(i.getPrice())
+                .build())
+                .collect(Collectors.toList());
 
     }
 
-    public List<Reservation> getByObject(Long id) throws Exception {
+    public List<ReservationDto> getByObject(Long id) throws Exception {
         RentObject rentObject = rentObjectRepository.findById(id)
                 .orElseThrow(() -> new Exception("RentObject ID not found"));
 
-        return reservationRepository.findAllByRentObject(rentObject);
+        return reservationRepository.findAllByRentObject(rentObject).stream().map(i -> ReservationDto.builder()
+                        .dateFrom(i.getDateFrom())
+                        .dateTo(i.getDateTo())
+                        .description(i.getDescription())
+                        .price(i.getPrice())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
